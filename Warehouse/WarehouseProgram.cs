@@ -24,13 +24,13 @@ namespace MiniProjectB2BRetailer.WarehouseApp
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
             {
+                //Declare Channel
                 channel.ExchangeDeclare(exchange: "logs", type: "fanout");
-
                 var queueName = channel.QueueDeclare().QueueName;
+                //Bind queue to channel
                 channel.QueueBind(queue: queueName, exchange: "logs", routingKey: "");
-
                 Console.WriteLine("Waiting for orders.");
-
+                //Adding consumer to chanel
                 var consumer = new EventingBasicConsumer(channel);
                 consumer.Received += (model, ea) =>
                 {
@@ -41,6 +41,7 @@ namespace MiniProjectB2BRetailer.WarehouseApp
                     HandleOrderRequest(receivedOrder, "");
                 };
                 channel.BasicConsume(queue: queueName, autoAck: true, consumer: consumer);
+                //Also listen for local orders
                 ListenForLocalOrders();
             }
 
@@ -77,10 +78,8 @@ namespace MiniProjectB2BRetailer.WarehouseApp
             {
                 // Declare an exchange:
                 var exchange = bus.Advanced.ExchangeDeclare("Warehouse.Direct", ExchangeType.Direct);
-
                 // Declare a queue
                 var queue = bus.Advanced.QueueDeclare("Warehouse"+stock.Location.CountryName);
-
                 // Bind queue to exchange (the routing key is ignored by a fanout exchange):
                 bus.Advanced.Bind(exchange, queue, stock.Location.CountryName);
                 // Synchronous consumer:
@@ -131,7 +130,6 @@ namespace MiniProjectB2BRetailer.WarehouseApp
         {
             Console.WriteLine("Sending a response to retailer of available item");
             bus.Send("RetailerFor"+ orderType + "Order", itemResponse);
-            //bus.Publish<ItemResponse>(itemResponse);
         }
     }
 }

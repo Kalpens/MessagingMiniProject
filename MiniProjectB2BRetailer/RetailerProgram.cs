@@ -127,7 +127,8 @@ namespace MiniProjectB2BRetailer
         {
             using (var bus = RabbitHutch.CreateBus("host=localhost"))
             {
-                bus.Receive<ItemResponse>("RetailerForLocalOrder", itemResponse => localItemResponse = itemResponse);
+                bus.Receive<ItemResponse>("RetailerForLocalOrder", itemResponse => 
+                    localItemResponse = itemResponse);
                 Console.WriteLine("Listening for Warehouse response for 2 seconds");
                 Thread.Sleep(TimeSpan.FromSeconds(2));
             }
@@ -155,7 +156,8 @@ namespace MiniProjectB2BRetailer
 
                 string json = JsonConvert.SerializeObject(order);
                 var body = Encoding.UTF8.GetBytes(json);
-                channel.BasicPublish(exchange: "logs", routingKey: "", basicProperties: null, body: body);
+                channel.BasicPublish(exchange: "logs", 
+                    routingKey: "", basicProperties: null, body: body);
                 Console.WriteLine(" [+] Sent order to all warehouses");
             }
 

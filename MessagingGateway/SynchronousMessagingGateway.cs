@@ -43,8 +43,8 @@ namespace MessagingGateway
             {
                 response = ListenToRetailerResponse(order.CustomerID);
                 counter++;
-                if (counter == 10)
-                    throw new Exception("No response in 10 seconds");
+                if (counter == 20)
+                    throw new Exception("No response in 20 seconds");
             }
 
             return response;

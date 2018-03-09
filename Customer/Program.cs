@@ -29,9 +29,29 @@ namespace MiniProjectB2BRetailer.Customer
                 switch (Convert.ToInt32(answer))
                 {
                     case 1:
-                        Console.WriteLine("Please fill out the following info on the order!\n" + "Item >> ");
-                        var itemName = Console.ReadLine();
-                        Console.WriteLine("Please fill out the following info on the order!\n" + "Country >> ");
+                        Console.WriteLine("Please Select item you wish to purchase!\n" + "1. Phone \n2. BlackBoard\n3. Watch");
+                        var itemID = Console.ReadLine();
+                        var itemName = "";
+                        if (itemID == "1")
+                        {
+                            itemName = "Phone";
+                        }
+
+                        else if (itemID == "2")
+                        {
+                            itemName = "BlackBoard";
+                        }
+
+                        else if (itemID == "3")
+                        {
+                            itemName = "Watch";
+                        }
+                        else
+                        {
+                            itemName = itemID;
+                        }
+
+                        Console.WriteLine("Please fill out the following info on the order!(Example: Denmark)\n" + "Country >> ");
                         var countryName = Console.ReadLine();
                         var order = new Order() { Item = new Item() { Name = itemName }, Location = new Location() { CountryName = countryName }, CustomerID = customerID };
                         var gateway = new SynchronousMessagingGateway();
