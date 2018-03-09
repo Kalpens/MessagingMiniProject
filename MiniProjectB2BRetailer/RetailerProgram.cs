@@ -20,7 +20,6 @@ namespace MiniProjectB2BRetailer
         static void Main(string[] args)
         {
             ListenToCustomerOrders();
-            Console.WriteLine("Some bs");
             var continueOperation = true;
             while (continueOperation)
             {
