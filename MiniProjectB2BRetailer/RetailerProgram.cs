@@ -49,7 +49,7 @@ namespace MiniProjectB2BRetailer
                 }
             }
             if (rightResponse == null)
-                throw new System.ArgumentException("Did not find item response", $"original");
+                rightResponse = new ItemResponse(){CustomerId = itemResponseList[0].CustomerId};
             return rightResponse;
         }
         private static void ListenToCustomerOrders()

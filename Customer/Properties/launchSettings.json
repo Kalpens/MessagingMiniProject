@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MiniProjectB2BRetailer.Warehouse": {
+      "commandName": "Project",
+      "commandLineArgs": "Denmark"
+    }
+  }
+}

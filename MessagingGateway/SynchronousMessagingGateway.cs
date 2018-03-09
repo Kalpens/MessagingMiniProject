@@ -18,10 +18,8 @@ namespace MessagingGateway
             {
                 // Declare an exchange:
                 var exchange = bus.Advanced.ExchangeDeclare("Customers", ExchangeType.Topic);
-
                 // Declare a queue
                 var queue = bus.Advanced.QueueDeclare("Customer" + customerID, false, true, false, true);
-
                 // Bind queue to exchange (the routing key is ignored by a fanout exchange):
                 bus.Advanced.Bind(exchange, queue, customerID);
                 // Synchronous consumer:

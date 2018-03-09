@@ -24,7 +24,7 @@ namespace MiniProjectB2BRetailer.Customer
             while (true)
             {
                 Console.WriteLine("Welcom to B2B Retailer!\n" + "Please choose from the following menu points:");
-                Console.WriteLine("1. Order\n" + "2. Warehouses\n" + "3. Exit");
+                Console.WriteLine("1. Order\n" + "2. Exit");
                 var answer = Console.ReadLine();
                 switch (Convert.ToInt32(answer))
                 {
@@ -37,28 +37,32 @@ namespace MiniProjectB2BRetailer.Customer
                         var gateway = new SynchronousMessagingGateway();
                         //handle response here
                         var itemAtWarehouse = gateway.PurchaseOrder(order);
-                        Console.WriteLine("Your item shipping cost:" + itemAtWarehouse.Charge);
-                        Console.WriteLine("Time to ship Your item: " + itemAtWarehouse.ShippingTime);
-                        Console.WriteLine("Are you satisfied with your order? Y/N");
-                        var ans = Console.ReadLine();
-                        if (ans == "N")
+                        if (itemAtWarehouse.ItemAvailable == false)
                         {
+                            Console.WriteLine("Item Not available");
                             Thread.Sleep(1000);
                             goto case 1;
                         }
                         else
                         {
-                            Console.WriteLine("Thank you for your order.");
-                            Thread.Sleep(1000);
-                        }
-                        break;
+                            Console.WriteLine("Your item shipping cost:" + itemAtWarehouse.Charge);
+                            Console.WriteLine("Time to ship Your item: " + itemAtWarehouse.ShippingTime);
+                            Console.WriteLine("Are you satisfied with your order? Y/N");
+                            var ans = Console.ReadLine();
+                            if (ans == "N")
+                            {
+                                Thread.Sleep(1000);
+                                goto case 1;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Thank you for your order.");
+                                Thread.Sleep(1000);
+                            }
 
+                            break;
+                        }
                     case 2:
-                        Console.WriteLine("Nothing done yet.");
-                        Thread.Sleep(3000);
-                        Environment.Exit(0);
-                        break;
-                    case 3:
                         Console.WriteLine("Thank you for using our application.");
                         Thread.Sleep(3000);
                         Environment.Exit(0);
